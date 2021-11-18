@@ -1,0 +1,30 @@
+#include<cstdio>
+#include<cstdlib>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#define PL printf("\n");
+using namespace std;
+
+int n,in[100001],post[100001],index[100001];
+
+void f(int in1,int in2,int post1,int post2)
+{
+    if(in1>in2 || post1>post2) return;
+    int root=post[post2];
+    int rootindex=index[root];
+    printf("%d ",root);
+
+    f(in1,rootindex-1,post1,post1+(rootindex-in1-1));
+    f(rootindex+1,in2,post1+(rootindex-in1),post2-1);
+}
+
+int main(void)
+{
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++) scanf("%d",&in[i]);
+    for(int i=1;i<=n;i++) index[in[i]]=i;
+    for(int i=1;i<=n;i++) scanf("%d",&post[i]);
+
+    f(1,n,1,n);
+}
