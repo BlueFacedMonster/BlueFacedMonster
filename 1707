@@ -1,0 +1,57 @@
+#include<cstdio>
+#include<cstdlib>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#define PL printf("\n");
+using namespace std;
+
+int n,ch[20001];
+int m;
+vector<int> a[20001];
+
+void dfs(int node, int c)
+{
+    ch[node]=c;
+    for(int i=0;i<a[node].size();i++)
+        if(ch[a[node][i]]==0)
+            dfs(a[node][i],3-c);
+}
+
+int main(void)
+{
+    int k;
+    scanf("%d",&k);
+    for(int ii=1;ii<=k;ii++){
+        scanf("%d %d",&n,&m);
+        for(int i=1;i<=m;i++)
+        {
+            int x,y;
+            scanf("%d %d",&x,&y);
+            a[x].push_back(y); a[y].push_back(x);
+        }
+        m=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(ch[i]==0){
+                dfs(i,1);
+            }
+        }
+
+        int fail=0;
+        for(int i=1;i<=n;i++)
+            for(int j=0;j<a[i].size();j++)
+                if(ch[i]==ch[a[i][j]]) fail=1;
+        if(fail==1) printf("NO\n");
+        else printf("YES\n");
+        
+        for(int i=1;i<=n;i++)
+        {
+            a[i].clear();
+            ch[i]=0;
+        }
+    }
+    return 0;
+}
+
+
