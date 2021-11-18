@@ -1,0 +1,42 @@
+#include<queue>
+#include<vector>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int a[1001];
+bool check[1001];
+
+void dfs(int x)
+{
+    if(check[x]) return;
+    check[x]=true;
+    dfs(a[x]);
+}
+
+int main(void)
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        int n;
+        scanf("%d",&n);
+        for(int i=1;i<=n;i++)
+        {
+            scanf("%d",&a[i]);
+            check[i]=false;
+        }
+        int ans=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(check[i]==false)
+            {
+                dfs(i);
+                ans+=1;
+            }
+        }
+        printf("%d\n",ans);
+    }
+    return 0;
+}
