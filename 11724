@@ -1,0 +1,40 @@
+#include<cstdio>
+#include<cstdlib>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#define PL printf("\n");
+using namespace std;
+
+int n,a[1001][1001],ch[1001];
+int m;
+
+void f(int p)
+{
+    ch[p]=1;
+    for(int i=1;i<=n;i++)
+        if(a[p][i]==1 && ch[i]==0)
+            f(i);
+}
+
+int main(void)
+{
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=m;i++)
+    {
+        int x,y;
+        scanf("%d %d",&x,&y);
+        a[x][y]=a[y][x]=1;
+    }
+    m=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(ch[i]==0)
+        {
+            m++;
+            f(i);
+        }
+    }
+    printf("%d",m);
+    return 0;
+}
