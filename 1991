@@ -1,0 +1,52 @@
+#include<cstdio>
+#include<cstdlib>
+#include<vector>
+#include<queue>
+#define PL printf("\n");
+using namespace std;
+
+int a[50][2];
+
+void preorder(int x)
+{
+    printf("%c",x+'A');
+    if(a[x][0]!=-1) preorder(a[x][0]);
+    if(a[x][1]!=-1) preorder(a[x][1]);
+}
+
+void inorder(int x)
+{
+    if(a[x][0]!=-1) inorder(a[x][0]);
+    printf("%c",x+'A');
+    if(a[x][1]!=-1) inorder(a[x][1]);
+}
+
+void postorder(int x)
+{
+    if(a[x][0]!=-1) postorder(a[x][0]);
+    if(a[x][1]!=-1) postorder(a[x][1]);
+    printf("%c",x+'A');
+}
+
+int main(void)
+{
+    int n;
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++)
+    {
+        char x,y,z;
+        scanf(" %c %c %c",&x,&y,&z);
+        x=x-'A';
+        if(y!='.') a[x][0]=y-'A';
+        else a[x][0]=-1;
+        if(z!='.') a[x][1]=z-'A';
+        else a[x][1]=-1;
+    }
+
+    preorder(0);
+    PL;
+    inorder(0);
+    PL;
+    postorder(0);
+    PL;
+}
