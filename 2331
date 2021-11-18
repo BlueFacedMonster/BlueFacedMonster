@@ -1,0 +1,41 @@
+#include<cstdio>
+#include<cstdlib>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#define PL printf("\n");
+using namespace std;
+
+int n,m,a[1000001];
+
+int next(int num)
+{
+    int sum=0;
+    while(num!=0)
+    {
+        int last=num%10;
+        num/=10;
+
+        int dot=1;
+        for(int i=1;i<=m;i++)
+            dot*=last;
+        sum+=dot;
+    }
+    return sum;
+}
+
+int main(void)
+{
+    scanf("%d %d",&n,&m);
+    int t=0;
+    while(a[n]==0)
+    {
+       a[n]=++t;
+       n=next(n);
+    }
+    printf("%d",a[n]-1);
+
+
+}
+
+
