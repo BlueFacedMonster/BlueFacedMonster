@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <queue>
+#include <vector>
+#include<stack>
+using namespace std;
+
+int n,m,s,e;
+int a[1001][1001];
+int d[1001],ch[1001],from[1001];
+int INF=987654321;
+
+int main(void)
+{
+
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+            a[i][j]=(i!=j)*INF;
+    for(int i=1;i<=m;i++)
+    {
+        int x,y,z;
+        scanf("%d %d %d",&x,&y,&z);
+        if(a[x][y]>z)
+            a[x][y]=z;
+    }
+    scanf("%d %d",&s,&e);
+
+    for(int i=1;i<=n;i++)
+    {
+        d[i]=INF;
+    }
+    d[s]=0;
+    for(int i=1;i<=n;i++)
+    {
+        int v=-1;
+        int dis=INF+1;
+        for(int j=1;j<=n;j++)
+            if(ch[j]==0 && d[j]<dis)
+            {
+                v=j;
+                dis=d[j];
+            }
+        ch[v]=1;
+        for(int j=1;j<=n;j++)
+        {
+            if(ch[j]==0 && d[j]>d[v]+a[v][j])
+            {
+                d[j]=d[v]+a[v][j];
+                from[j]=v;
+            }
+        }
+    }
+    /*
+    for(int i=1;i<=n;i++)
+        printf("%d ",from[i]);
+    printf("!");*/
+    printf("%d\n",d[e]);
+    int x=e;
+    stack<int> S;
+    while(x!=0)
+    {
+        S.push(x);
+        x=from[x];
+    }
+    printf("%d\n",S.size());
+    while(!S.empty())
+    {
+        printf("%d ",S.top());
+        S.pop();
+    }
+
+    return 0;
+}
+
+
