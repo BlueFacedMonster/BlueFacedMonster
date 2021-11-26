@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <queue>
+#include <vector>
+using namespace std;
+
+int n,m,s,e;
+int a[1001][1001];
+int d[1001],ch[1001];
+int INF=987654321;
+
+int main(void)
+{
+
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+            a[i][j]=(i!=j)*INF;
+    for(int i=1;i<=m;i++)
+    {
+        int x,y,z;
+        scanf("%d %d %d",&x,&y,&z);
+        if(a[x][y]>z)
+            a[x][y]=z;
+    }
+    scanf("%d %d",&s,&e);
+
+    for(int i=1;i<=n;i++)
+    {
+        d[i]=a[s][i];
+    }
+    
+    for(int i=1;i<=n;i++)
+    {
+        int v=-1;
+        int dis=INF+1;
+        for(int j=1;j<=n;j++)
+            if(ch[j]==0 && d[j]<dis)
+            {
+                v=j;
+                dis=d[j];
+            }
+        ch[v]=1;
+        for(int j=1;j<=n;j++)
+        {
+            if(d[j]>d[v]+a[v][j])
+                d[j]=d[v]+a[v][j];
+        }
+    }
+
+    printf("%d",d[e]);
+
+    return 0;
+}
+
+
