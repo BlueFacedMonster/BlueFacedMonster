@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <queue>
+#include <vector>
+#include<stack>
+#include<algorithm>
+#include<functional>
+#include<iostream>
+
+using namespace std;
+
+int n,m,s,e;
+int heap[100001];
+int hn;
+int p[1000001];
+
+int Find(int x)
+{
+    if(x==p[x]) return x;
+    else return p[x]=Find(p[x]);
+}
+
+void Union(int x,int y)
+{
+    x=Find(x);
+    y=Find(y);
+    p[y]=x;
+}
+
+int main(void)
+{
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=n;i++)
+        p[i]=i;
+
+    for(int i=1;i<=m;i++)
+    {
+        int x,y,z;
+        scanf("%d %d",&y,&z);
+        Union(y,z);
+    }
+    int k=-1;
+    for(int i=1;i<=n;i++)
+    {
+        if(Find(i)==Find(1))
+            k++;
+    }
+    printf("%d",k);
+    return 0;
+}
+
+
